@@ -2,20 +2,21 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface IUseOverviewDataType {
+  fundManager: string
   fundCode: string;
   dateRange: "all" | "1m" | "3m" | "6m" | "12m";
 }
 
 const urlPrefix = process.env.REACT_APP_RAW_PREFIX;
 
-const useOverviewData = ({ fundCode, dateRange }: IUseOverviewDataType) => {
+const useOverviewData = ({ fundManager, fundCode, dateRange }: IUseOverviewDataType) => {
   const [income, setIncome] = useState<number[][]>([]);
   const [handleIncome, setHandleIncome] = useState<number[][]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const btcPriceUrl = `${urlPrefix}/${fundCode}/raw/btc_price.json`;
-    const url = `${urlPrefix}/${fundCode}/${dateRange}.json`;
+    const btcPriceUrl = `${urlPrefix}/${fundManager}/main/${fundCode}/raw/btc_price.json`;
+    const url = `${urlPrefix}/${fundManager}/main/${fundCode}/${dateRange}.json`;
 
     const fetchData = async () => {
       const [{ data: handleBtcPrice }, { data: handleAll }]: Array<{
@@ -39,7 +40,7 @@ const useOverviewData = ({ fundCode, dateRange }: IUseOverviewDataType) => {
       setHandleIncome([]);
       setIsLoading(true);
     };
-  }, [fundCode, dateRange]);
+  }, [fundManager, fundCode, dateRange]);
 
   return {
     income,

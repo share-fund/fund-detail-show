@@ -3,8 +3,8 @@ import { LineChart } from "../../components";
 import useOverviewData from "hooks/useOverviewData";
 import { getNumberFormat, getNumberWithDecimal, formatDate } from "../../utils";
 
-export const FundOverviewChart = ({ fundCode, chartColor, height = 240, dateRange = "all" }) => {
-  const { income, handleIncome, isLoading } = useOverviewData({ fundCode, dateRange });
+export const FundOverviewChart = ({ fundManager, fundCode, chartColor, height = 240, dateRange = "all" }) => {
+  const { income, handleIncome, isLoading } = useOverviewData({ fundManager, fundCode, dateRange });
 
   const tooltipFormatter = (params) => {
     const date = new Date(params[0].data[0]);

@@ -1,4 +1,3 @@
-export * from "./Overview";
 export * from "./OverviewChart";
 export * from "./Description";
 export * from "./HistoryRecords";

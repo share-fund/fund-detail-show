@@ -16,18 +16,22 @@ const { Content } = Layout;
 const { TabPane } = Tabs;
 const urlPrefix = process.env.REACT_APP_RAW_PREFIX;
 
-export const T1Component = ({ className, fundCode }) => {
+export const T1Component = ({ className }) => {
   const [t1Data, setT1Data] = useState([]);
   const [statistic, setStatistic] = useState({});
   const [metrics, setMetrics] = useState({});
   const [dateRange, setDateRange] = useState("all");
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const fundManager = urlParams.get('manager');
+  const fundCode = urlParams.get('code');
+
   useEffect(() => {
     const fetchCharts = async () => {
       const [{ data: all }, { data: statisticData }, { data: metricsData }] = await Promise.all([
-        axios.get(`${urlPrefix}/${fundCode}/all.json`),
-        axios.get(`${urlPrefix}/${fundCode}/statistic.json`),
-        axios.get(`${urlPrefix}/${fundCode}/metrics.json`),
+        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/all.json`),
+        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/statistic.json`),
+        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/metrics.json`),
       ]);
 
       setMetrics(metricsData);
@@ -65,6 +69,7 @@ export const T1Component = ({ className, fundCode }) => {
                   }}
                 >
                   <FundOverviewChart
+                    fundManager={fundManager}
                     fundCode={fundCode}
                     chartColor={FUNDS_DATA[fundCode].color}
                     dateRange={dateRange}
