@@ -1,12 +1,9 @@
 import React from "react";
 import { Col, Descriptions, Typography } from "antd";
-import { FUNDS_DATA } from "../../components";
 
 const { Title, Paragraph } = Typography;
 
-export const FundDescription = ({ fundCode }) => {
-  const fund = FUNDS_DATA[fundCode];
-
+export const FundDescription = ({ fund }) => {
   return (
     <Typography>
       <Title level={5} className="title-p-t-10">
