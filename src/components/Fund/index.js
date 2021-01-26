@@ -4,4 +4,3 @@ export * from "./HistoryRecords";
 export * from "./HistoryPPS";
 export * from "./Indicators";
 export * from "./Summary";
-export * from "./share_data";

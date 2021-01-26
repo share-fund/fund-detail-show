@@ -9,15 +9,16 @@ import {
   FundHistoryPPS,
   FundIndicators,
   FundSummary,
-  FUNDS_DATA,
 } from "../../components";
+
+import { FUNDS_DATA } from "../../share_data";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const urlPrefix = process.env.REACT_APP_RAW_PREFIX;
 
 export const T1Component = ({ className }) => {
-  const [t1Data, setT1Data] = useState([]);
+  const [fundData, setFundData] = useState([]);
   const [statistic, setStatistic] = useState({});
   const [metrics, setMetrics] = useState({});
   const [dateRange, setDateRange] = useState("all");
@@ -25,6 +26,7 @@ export const T1Component = ({ className }) => {
   const urlParams = new URLSearchParams(window.location.search);
   const fundManager = urlParams.get('manager');
   const fundCode = urlParams.get('code');
+  const fund = FUNDS_DATA[fundManager][fundCode];
 
   useEffect(() => {
     const fetchCharts = async () => {
@@ -35,7 +37,7 @@ export const T1Component = ({ className }) => {
       ]);
 
       setMetrics(metricsData);
-      setT1Data(all);
+      setFundData(all);
       setStatistic(statisticData);
     };
 
@@ -51,7 +53,7 @@ export const T1Component = ({ className }) => {
       <Content>
         <Row className="content" gutter={24}>
           <FundSummary
-            fundName={FUNDS_DATA[fundCode].name}
+            fundName={fund.name}
             metrics={metrics}
             statistic={statistic}
           />
@@ -71,9 +73,7 @@ export const T1Component = ({ className }) => {
                   <FundOverviewChart
                     fundManager={fundManager}
                     fundCode={fundCode}
-                    chartColor={FUNDS_DATA[fundCode].color}
                     dateRange={dateRange}
-                    height={360}
                   />
                   <Radio.Group
                     defaultValue="all"
@@ -102,7 +102,7 @@ export const T1Component = ({ className }) => {
             <Card className="p-t-0">
               <Tabs defaultActiveKey="1" style={{ background: "#fff" }} size="large">
                 <TabPane tab="项目简介" key="1">
-                  <FundDescription fundCode={fundCode} />
+                  <FundDescription fund={fund} />
                 </TabPane>
               </Tabs>
             </Card>
@@ -114,7 +114,7 @@ export const T1Component = ({ className }) => {
                   <FundHistoryRecords statistic={statistic} />
                 </TabPane>
                 <TabPane tab="历史净值" key="2">
-                  <FundHistoryPPS data={t1Data} />
+                  <FundHistoryPPS data={fundData} />
                 </TabPane>
               </Tabs>
             </Card>
