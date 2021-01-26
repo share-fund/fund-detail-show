@@ -9,8 +9,9 @@ import {
   FundHistoryPPS,
   FundIndicators,
   FundSummary,
-  FUNDS_DATA,
 } from "../../components";
+
+import { FUNDS_DATA } from "../../share_data";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
