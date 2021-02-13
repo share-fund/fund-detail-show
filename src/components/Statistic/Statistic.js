@@ -9,8 +9,8 @@ export const Statistic = ({
   isNormal = true,
   ...props
 }) => {
-  const getColor = (type) => {
-    if (type) {
+  const getColor = (type, value) => {
+    if (type || value === "--") {
       return "#000";
     }
     return value >= 0 ? "#389e0d" : "#cf1322";
@@ -20,7 +20,7 @@ export const Statistic = ({
       title={title}
       value={value}
       precision={percision}
-      valueStyle={{ color: getColor(isNormal), fontWeight: 600 }}
+      valueStyle={{ color: getColor(isNormal, value), fontWeight: 600 }}
       prefix={!isNormal && isNumberGreaterThanZero(value) ? "+" : ""}
       {...props}
     />
@@ -36,6 +36,11 @@ export const LatestPricePerShare = ({ timestamp, pps }) => {
 };
 
 export const PercentageStatistic = ({ title, value }) => {
-  const _value = isNaN(value) ? 0 : value * 100;
+  let _value;
+  if (value === "--") {
+    _value = value;
+  } else {
+    _value = isNaN(value) ? 0 : value * 100;
+  }
   return <Statistic title={title} value={_value} precision={2} suffix="%" isNormal={false} />;
 };

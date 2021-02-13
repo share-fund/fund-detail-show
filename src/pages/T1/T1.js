@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Layout, Row, Card, Col, Tabs, Radio } from "antd";
 import axios from "axios";
 import styled from "styled-components";
@@ -24,8 +24,9 @@ export const T1Component = ({ className }) => {
   const [dateRange, setDateRange] = useState("all");
 
   const urlParams = new URLSearchParams(window.location.search);
-  const fundManager = urlParams.get('manager');
-  const fundCode = urlParams.get('code');
+  const fundManager = urlParams.get("manager");
+  const fundCode = urlParams.get("code");
+  const showAnnualReturn = urlParams.get("showAnnualReturn");
   const fund = FUNDS_DATA[fundManager][fundCode];
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export const T1Component = ({ className }) => {
     };
 
     fetchCharts();
-  }, [fundCode]);
+  }, [fundCode, fundManager]);
 
   const pickDate = (e) => {
     setDateRange(e.target.value);
@@ -56,6 +57,7 @@ export const T1Component = ({ className }) => {
             fundName={fund.name}
             metrics={metrics}
             statistic={statistic}
+            showAnnualReturn={showAnnualReturn}
           />
         </Row>
         <Row className="content" gutter={24}>
@@ -70,11 +72,16 @@ export const T1Component = ({ className }) => {
                     alignItems: "center",
                   }}
                 >
-                  <FundOverviewChart
-                    fundManager={fundManager}
-                    fundCode={fundCode}
-                    dateRange={dateRange}
-                  />
+                  {useMemo(
+                    () => (
+                      <FundOverviewChart
+                        fundManager={fundManager}
+                        fundCode={fundCode}
+                        dateRange={dateRange}
+                      />
+                    ),
+                    [fundCode, dateRange, fundManager]
+                  )}
                   <Radio.Group
                     defaultValue="all"
                     buttonStyle="solid"

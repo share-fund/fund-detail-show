@@ -3,7 +3,13 @@ import { Row, Card, Col, Tag } from "antd";
 
 import { Statistic, LatestPricePerShare, PercentageStatistic } from "../../components";
 
-export const FundSummary = ({ metrics, statistic, fundName }) => {
+export const FundSummary = ({ metrics, statistic, fundName, showAnnualReturn = false }) => {
+  const getAnnualReturn = (show) => {
+    if (show && show !== "false") {
+      return metrics.strategy && metrics.strategy.annual_return;
+    }
+    return "--";
+  };
   return (
     <Col xs={24}>
       <Card
@@ -20,10 +26,7 @@ export const FundSummary = ({ metrics, statistic, fundName }) => {
       >
         <Row>
           <Col sm={5} xs={12}>
-            <PercentageStatistic
-              title="历史年化收益率"
-              value={metrics.strategy && metrics.strategy.annual_return}
-            />
+            <PercentageStatistic title="历史年化收益率" value={getAnnualReturn(showAnnualReturn)} />
           </Col>
           <Col sm={5} xs={12}>
             <PercentageStatistic title="成立以来收益率" value={statistic.pnl_rate} />
