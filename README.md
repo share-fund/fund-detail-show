@@ -13,3 +13,8 @@
 ```shell
 npm start
 ```
+
+## 构建
+
+- 设置 `.env.production` 环境变量
+- 执行 `npm run build`
