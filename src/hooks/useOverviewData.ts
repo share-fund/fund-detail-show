@@ -2,10 +2,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface IUseOverviewDataType {
-  fundManager: string
+  fundManager: string;
   fundCode: string;
   dateRange: "all" | "1m" | "3m" | "6m" | "12m";
 }
+
+const DaysObj = {
+  all: 0,
+  "1m": 30,
+  "3m": 90,
+  "6m": 180,
+  "12m": 360,
+};
 
 const urlPrefix = process.env.REACT_APP_RAW_PREFIX;
 
@@ -19,9 +27,10 @@ const useOverviewData = ({ fundManager, fundCode, dateRange }: IUseOverviewDataT
     const url = `${urlPrefix}/${fundManager}/main/${fundCode}/${dateRange}.json`;
 
     const fetchData = async () => {
-      const [{ data: handleBtcPrice }, { data: handleAll }]: Array<{
+      const [{ data: handleBtcPriceRes }, { data: handleAll }]: Array<{
         data: number[][];
       }> = await Promise.all([axios.get(btcPriceUrl), axios.get(url)]);
+      const handleBtcPrice = handleBtcPriceRes.slice(-1 * DaysObj[dateRange]);
       const startPriceByHandle = handleBtcPrice[0][1];
       const income = handleAll.map((x) => [x[0] * 1000, x[2] * 100]);
       const handleIncome = handleBtcPrice.map((x) => [

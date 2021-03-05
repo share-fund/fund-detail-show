@@ -27,6 +27,8 @@ export const T1Component = ({ className }) => {
   const fundManager = urlParams.get("manager");
   const fundCode = urlParams.get("code");
   const showAnnualReturn = urlParams.get("showAnnualReturn");
+  const running = urlParams.get("running");
+
   const fund = FUNDS_DATA[fundManager][fundCode];
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export const T1Component = ({ className }) => {
             metrics={metrics}
             statistic={statistic}
             showAnnualReturn={showAnnualReturn}
+            isRunning={running}
           />
         </Row>
         <Row className="content" gutter={24}>

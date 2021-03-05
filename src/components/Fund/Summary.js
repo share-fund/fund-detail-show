@@ -3,12 +3,25 @@ import { Row, Card, Col, Tag } from "antd";
 
 import { Statistic, LatestPricePerShare, PercentageStatistic } from "../../components";
 
-export const FundSummary = ({ metrics, statistic, fundName, showAnnualReturn = false }) => {
+export const FundSummary = ({
+  metrics,
+  statistic,
+  fundName,
+  showAnnualReturn = false,
+  isRunning = false,
+}) => {
   const getAnnualReturn = (show) => {
     if (show && show !== "false") {
       return metrics.strategy && metrics.strategy.annual_return;
     }
     return "--";
+  };
+  const getIsRunning = (isRunning) => {
+    console.log(isRunning);
+    if (isRunning && isRunning !== "false") {
+      return "运行中";
+    }
+    return "已结束";
   };
   return (
     <Col xs={24}>
@@ -20,7 +33,7 @@ export const FundSummary = ({ metrics, statistic, fundName, showAnnualReturn = f
         }
         extra={
           <>
-            <Tag color="default">运行中</Tag>
+            <Tag color="default">{getIsRunning(isRunning)}</Tag>
           </>
         }
       >
