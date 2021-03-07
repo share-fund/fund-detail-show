@@ -31,11 +31,10 @@ export const T1Component = ({ className, data }) => {
   useEffect(() => {
     const fetchCharts = async () => {
       const [{ data: all }, { data: statisticData }, { data: metricsData }] = await Promise.all([
-        axios.get(`${urlPrefix}/${manager}/main/${code}/all.json`),
-        axios.get(`${urlPrefix}/${manager}/main/${code}/statistic.json`),
-        axios.get(`${urlPrefix}/${manager}/main/${code}/metrics.json`),
+        axios.get(`${urlPrefix}/${manager}/${code}/all.json`),
+        axios.get(`${urlPrefix}/${manager}/${code}/statistic.json`),
+        axios.get(`${urlPrefix}/${manager}/${code}/metrics.json`),
       ]);
-
       setMetrics(metricsData);
       setFundData(all);
       setStatistic(statisticData);

@@ -23,8 +23,8 @@ const useOverviewData = ({ fundManager, fundCode, dateRange }: IUseOverviewDataT
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const btcPriceUrl = `${urlPrefix}/${fundManager}/main/${fundCode}/raw/btc_price.json`;
-    const url = `${urlPrefix}/${fundManager}/main/${fundCode}/${dateRange}.json`;
+    const btcPriceUrl = `${urlPrefix}/${fundManager}/${fundCode}/raw/btc_price.json`;
+    const url = `${urlPrefix}/${fundManager}/${fundCode}/${dateRange}.json`;
 
     const fetchData = async () => {
       const [{ data: handleBtcPriceRes }, { data: handleAll }]: Array<{

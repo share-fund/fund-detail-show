@@ -24,7 +24,7 @@ const App = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const list = await axios.get(`${urlPrefix}/fund-data/main/list.json`);
+      const list = await axios.get(`${urlPrefix}/list.json`);
       setListData(formatData(list.data));
     };
     fetchData();
