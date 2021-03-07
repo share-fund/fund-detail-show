@@ -47,3 +47,6 @@ code {
 .ant-layout-content {
   background-color: #fff;
 }
+.ant-layout {
+  height: 100%;
+}

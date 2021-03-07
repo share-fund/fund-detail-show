@@ -10,33 +10,30 @@ import {
   FundIndicators,
   FundSummary,
 } from "../../components";
-
-import { FUNDS_DATA } from "../../share_data";
+import { useLocation } from "react-router-dom";
+import qs from "qs";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
 const urlPrefix = process.env.REACT_APP_RAW_PREFIX;
 
-export const T1Component = ({ className }) => {
+export const T1Component = ({ className, data }) => {
   const [fundData, setFundData] = useState([]);
   const [statistic, setStatistic] = useState({});
   const [metrics, setMetrics] = useState({});
   const [dateRange, setDateRange] = useState("all");
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const fundManager = urlParams.get("manager");
-  const fundCode = urlParams.get("code");
-  const showAnnualReturn = urlParams.get("showAnnualReturn");
-  const running = urlParams.get("running");
-
-  const fund = FUNDS_DATA[fundManager][fundCode];
+  const { search } = useLocation();
+  const { code, manager } = qs.parse(search.replace("?", ""));
+  const fund = data[manager] ? data[manager].find((x) => x.code === code) : {};
+  fund.manager = manager;
+  const { showAnnualReturn, status } = fund;
 
   useEffect(() => {
     const fetchCharts = async () => {
       const [{ data: all }, { data: statisticData }, { data: metricsData }] = await Promise.all([
-        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/all.json`),
-        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/statistic.json`),
-        axios.get(`${urlPrefix}/${fundManager}/main/${fundCode}/metrics.json`),
+        axios.get(`${urlPrefix}/${manager}/main/${code}/all.json`),
+        axios.get(`${urlPrefix}/${manager}/main/${code}/statistic.json`),
+        axios.get(`${urlPrefix}/${manager}/main/${code}/metrics.json`),
       ]);
 
       setMetrics(metricsData);
@@ -45,7 +42,7 @@ export const T1Component = ({ className }) => {
     };
 
     fetchCharts();
-  }, [fundCode, fundManager]);
+  }, [code, manager]);
 
   const pickDate = (e) => {
     setDateRange(e.target.value);
@@ -60,7 +57,7 @@ export const T1Component = ({ className }) => {
             metrics={metrics}
             statistic={statistic}
             showAnnualReturn={showAnnualReturn}
-            isRunning={running}
+            status={status}
           />
         </Row>
         <Row className="content" gutter={24}>
@@ -78,12 +75,12 @@ export const T1Component = ({ className }) => {
                   {useMemo(
                     () => (
                       <FundOverviewChart
-                        fundManager={fundManager}
-                        fundCode={fundCode}
+                        fundManager={manager}
+                        fundCode={code}
                         dateRange={dateRange}
                       />
                     ),
-                    [fundCode, dateRange, fundManager]
+                    [code, dateRange, manager]
                   )}
                   <Radio.Group
                     defaultValue="all"
