@@ -24,7 +24,7 @@ export const T1Component = ({ className, data }) => {
   const [dateRange, setDateRange] = useState("all");
   const { search } = useLocation();
   const { code, manager } = qs.parse(search.replace("?", ""));
-  const fund = data[manager] ? data[manager].find((x) => x.code === code) : {};
+  const fund = data[manager]?.funds ? data[manager].funds.find((x) => x.code === code) : {};
   fund.manager = manager;
   const { showAnnualReturn, status } = fund;
 

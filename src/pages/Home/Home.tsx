@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Tag } from "antd";
+import { Table, Tag, Card, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 
 export const Home = ({ data }: any) => {
@@ -45,7 +45,7 @@ export const Home = ({ data }: any) => {
     },
   ];
   const formatData = (data: any, manager: any) => {
-    return data[manager].map((x: any) => {
+    return data[manager].funds.map((x: any) => {
       return {
         ...x,
         manager,
@@ -56,15 +56,18 @@ export const Home = ({ data }: any) => {
     <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
       {list.map((x) => {
         return (
-          <div key={x}>
-            <h1>{x}</h1>
-            <Table
-              rowKey="code"
-              columns={columns}
-              dataSource={formatData(data, x)}
-              pagination={false}
-            />
-          </div>
+          <Row key={data[x].name} gutter={[24, 24]}>
+            <Col xs={24}>
+              <Card title={data[x].name}>
+                <Table
+                  rowKey="code"
+                  columns={columns}
+                  dataSource={formatData(data, x)}
+                  pagination={false}
+                />
+              </Card>
+            </Col>
+          </Row>
         );
       })}
     </div>

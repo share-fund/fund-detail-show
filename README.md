@@ -2,19 +2,28 @@
 
 ## 环境设置
 
-- 安装 `nvm`
+- 安装 `yarn`
 - 进入项目目录
-  - 执行 `nvm use`
-  - 执行 `nvm install`
-- 执行 `npm install`
+  - 执行 `yarn`
 
 ## 启动
 
+- 根据 `.env.example` 创建 `.env.development`
+
+```
+//url前缀
+REACT_APP_RAW_PREFIX
+//所属manager
+REACT_APP_MANAGER
+```
+
+- 本地启动
+
 ```shell
-npm start
+yarn start
 ```
 
 ## 构建
 
-- 设置 `.env.production` 环境变量
-- 执行 `npm run build`
+- 执行 `yarn build`
+- 输入需要构建的 `manager`
