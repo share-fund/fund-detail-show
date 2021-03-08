@@ -45,7 +45,7 @@ export const Home = ({ data }: any) => {
     },
   ];
   const formatData = (data: any, manager: any) => {
-    return data[manager].funds.map((x: any) => {
+    return data.map((x: any) => {
       return {
         ...x,
         manager,
@@ -53,18 +53,46 @@ export const Home = ({ data }: any) => {
     });
   };
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
+    <div style={{ maxWidth: "1200px", margin: "24px auto", width: "100%" }}>
       {list.map((x) => {
         return (
-          <Row key={data[x].name} gutter={[24, 24]}>
+          <Row key={data[x].name} gutter={[24, 24]} style={{ margin: "24px auto" }}>
             <Col xs={24}>
               <Card title={data[x].name}>
-                <Table
-                  rowKey="code"
-                  columns={columns}
-                  dataSource={formatData(data, x)}
-                  pagination={false}
-                />
+                {data[x].funds.filter((x: any) => x.status === "prepare" || x.status === "running")
+                  .length > 0 && (
+                  <>
+                    <Table
+                      rowKey="code"
+                      columns={columns}
+                      dataSource={formatData(
+                        data[x].funds.filter(
+                          (x: any) => x.status === "prepare" || x.status === "running"
+                        ),
+                        x
+                      )}
+                      pagination={false}
+                      size="small"
+                    />
+                  </>
+                )}
+                {data[x].funds.filter((x: any) => x.status === "done").length > 0 && (
+                  <>
+                    <h3 style={{ marginTop: "48px" }}>往期项目</h3>
+                    <Table
+                      rowKey="code"
+                      columns={columns}
+                      dataSource={formatData(
+                        data[x].funds.filter(
+                          (x: any) => x.status === "done" || x.status === "done"
+                        ),
+                        x
+                      )}
+                      pagination={false}
+                      size="small"
+                    />
+                  </>
+                )}
               </Card>
             </Col>
           </Row>
