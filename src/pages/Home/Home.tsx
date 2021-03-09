@@ -20,6 +20,7 @@ export const Home = ({ data }: any) => {
     {
       title: "名称",
       dataIndex: "name",
+      width: "30%",
       key: "name",
       render: (text: string, record: any) => {
         const { code, manager, status } = record;
@@ -31,9 +32,40 @@ export const Home = ({ data }: any) => {
       },
     },
     {
+      title: `最新净值`,
+      dataIndex: "data",
+      width: "15%",
+      render: (data: any) => {
+        return data.pps;
+      },
+    },
+    {
+      title: "成立以来收益率",
+      dataIndex: "data",
+      width: "15%",
+      render: (data: any) => {
+        return (
+          <span className={data.cum_pnl_rate >= 0 ? "green" : "red"}>{data.cum_pnl_rate} %</span>
+        );
+      },
+    },
+    {
+      title: "昨日涨跌",
+      dataIndex: "data",
+      width: "15%",
+      render: (data: any) => {
+        return (
+          <span className={data.daily_pnl_rate >= 0 ? "green" : "red"}>
+            {data.daily_pnl_rate} %
+          </span>
+        );
+      },
+    },
+    {
       title: "状态",
       key: "status",
       dataIndex: "status",
+      width: "15%",
       render: (status: string) => {
         const color = status === "running" ? "green" : "default";
         return (

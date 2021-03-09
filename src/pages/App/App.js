@@ -37,7 +37,7 @@ const App = () => {
         url={
           MANAGER === "all"
             ? "https://trendfund.cc/static/media/logo.eab99ef9.svg"
-            : listData[MANAGER].logoUrl
+            : listData[MANAGER]?.logoUrl
         }
       />
       <Routes>
@@ -48,7 +48,7 @@ const App = () => {
               url={
                 MANAGER === "all"
                   ? "https://trendfund.cc/static/media/banner.ebaa5843.webp"
-                  : listData[MANAGER].bannerUrl
+                  : listData[MANAGER]?.bannerUrl
               }
             />
           }
