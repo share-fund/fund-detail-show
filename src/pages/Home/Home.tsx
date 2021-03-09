@@ -45,7 +45,9 @@ export const Home = ({ data }: any) => {
       width: "15%",
       render: (data: any) => {
         return (
-          <span className={data.cum_pnl_rate >= 0 ? "green" : "red"}>{data.cum_pnl_rate} %</span>
+          <span className={data.cum_pnl_rate >= 0 ? "green" : "red"}>
+            {data.cum_pnl_rate * 100} %
+          </span>
         );
       },
     },
@@ -56,7 +58,7 @@ export const Home = ({ data }: any) => {
       render: (data: any) => {
         return (
           <span className={data.daily_pnl_rate >= 0 ? "green" : "red"}>
-            {data.daily_pnl_rate} %
+            {data.daily_pnl_rate * 100} %
           </span>
         );
       },
