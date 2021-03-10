@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Tag, Card, Row, Col } from "antd";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export const Home = ({ data }: any) => {
   const getStatus = (status: string) => {
@@ -20,7 +21,6 @@ export const Home = ({ data }: any) => {
     {
       title: "名称",
       dataIndex: "name",
-      width: "30%",
       key: "name",
       render: (text: string, record: any) => {
         const { code, manager, status } = record;
@@ -32,9 +32,16 @@ export const Home = ({ data }: any) => {
       },
     },
     {
+      title: "日期",
+      dataIndex: "data",
+      render: (data: any) => {
+        console.log(+new Date(data.datetime));
+        return moment(+new Date(data.datetime)).format("YYYY-MM-DD");
+      },
+    },
+    {
       title: `最新净值`,
       dataIndex: "data",
-      width: "15%",
       render: (data: any) => {
         return data.pps;
       },
@@ -42,7 +49,6 @@ export const Home = ({ data }: any) => {
     {
       title: "成立以来收益率",
       dataIndex: "data",
-      width: "15%",
       render: (data: any) => {
         return (
           <span className={data.cum_pnl_rate >= 0 ? "green" : "red"}>
@@ -54,7 +60,6 @@ export const Home = ({ data }: any) => {
     {
       title: "昨日涨跌",
       dataIndex: "data",
-      width: "15%",
       render: (data: any) => {
         return (
           <span className={data.daily_pnl_rate >= 0 ? "green" : "red"}>
@@ -67,7 +72,6 @@ export const Home = ({ data }: any) => {
       title: "状态",
       key: "status",
       dataIndex: "status",
-      width: "15%",
       render: (status: string) => {
         const color = status === "running" ? "green" : "default";
         return (
@@ -106,7 +110,6 @@ export const Home = ({ data }: any) => {
                         x
                       )}
                       pagination={false}
-                      size="small"
                     />
                   </>
                 )}
@@ -123,7 +126,6 @@ export const Home = ({ data }: any) => {
                         x
                       )}
                       pagination={false}
-                      size="small"
                     />
                   </>
                 )}
