@@ -35,7 +35,6 @@ export const Home = ({ data }: any) => {
       title: "日期",
       dataIndex: "data",
       render: (data: any) => {
-        console.log(+new Date(data.datetime));
         return moment(+new Date(data.datetime)).format("YYYY-MM-DD");
       },
     },

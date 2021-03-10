@@ -34,22 +34,14 @@ const App = () => {
   return (
     <Layout>
       <Header
-        url={
-          MANAGER === "all"
-            ? "https://trendfund.cc/static/media/logo.eab99ef9.svg"
-            : listData[MANAGER]?.logoUrl
-        }
+        url={`https://raw.githubusercontent.com/share-fund/fund-assets/main/${MANAGER}/logo.png`}
       />
       <Routes>
         <Route
           path="/"
           element={
             <Banner
-              url={
-                MANAGER === "all"
-                  ? "https://trendfund.cc/static/media/banner.ebaa5843.webp"
-                  : listData[MANAGER]?.bannerUrl
-              }
+              url={`https://raw.githubusercontent.com/share-fund/fund-assets/main/${MANAGER}/banner.png`}
             />
           }
         />
