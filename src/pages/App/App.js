@@ -31,18 +31,23 @@ const App = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (MANAGER !== "all" && listData[MANAGER]) {
+      const link = document.head.querySelector("link[rel=icon]");
+      document.title = listData[MANAGER]?.name || "Fund Data";
+      link.href = listData[MANAGER]?.favicon;
+    }
+  }, [listData]);
+
   return (
     <Layout>
-      <Header
-        url={`https://raw.githubusercontent.com/share-fund/fund-assets/main/${MANAGER}/logo.png`}
-      />
+      <Header url={MANAGER === "all" ? "/logo.png" : listData[MANAGER]?.logoUrl} />
       <Routes>
         <Route
           path="/"
           element={
-            <Banner
-              url={`https://raw.githubusercontent.com/share-fund/fund-assets/main/${MANAGER}/banner.png`}
-            />
+            <Banner url={MANAGER === "all" ? "/banner.png" : listData[MANAGER]?.bannerUrl} />
           }
         />
       </Routes>
