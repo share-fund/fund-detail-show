@@ -32,7 +32,7 @@ export const Home = ({ data }: any) => {
       },
     },
     {
-      title: "日期",
+      title: "更新日期",
       dataIndex: "data",
       render: (data: any) => {
         return moment(+new Date(data.datetime)).format("YYYY-MM-DD");

@@ -13,7 +13,7 @@ const MANAGER = process.env.REACT_APP_MANAGER;
 const App = () => {
   const [listData, setListData] = useState({});
   const formatData = (data) => {
-    if (MANAGER === "all") {
+    if (MANAGER === "default") {
       return data;
     } else {
       if (data[MANAGER]) {
@@ -33,23 +33,18 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (MANAGER !== "all" && listData[MANAGER]) {
+    if (listData[MANAGER]) {
       const link = document.head.querySelector("link[rel=icon]");
-      document.title = listData[MANAGER]?.name || "Fund Data";
+      document.title = listData[MANAGER]?.name || "ShareFund 基金";
       link.href = listData[MANAGER]?.favicon;
     }
   }, [listData]);
 
   return (
     <Layout>
-      <Header url={MANAGER === "all" ? "/logo.png" : listData[MANAGER]?.logoUrl} />
+      <Header url={listData[MANAGER]?.logoUrl} />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Banner url={MANAGER === "all" ? "/banner.png" : listData[MANAGER]?.bannerUrl} />
-          }
-        />
+        <Route path="/" element={<Banner url={listData[MANAGER]?.bannerUrl} />} />
       </Routes>
       <Routes>
         <Route path="/" element={<Home data={listData} />} />
