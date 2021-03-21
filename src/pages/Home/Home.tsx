@@ -93,7 +93,7 @@ export const Home = ({ data }: any) => {
     <div style={{ maxWidth: "1200px", margin: "24px auto", width: "100%" }}>
       {list.map((x) => {
         return (
-          <Row key={data[x].name} gutter={[24, 24]} style={{ margin: "24px auto" }}>
+          <Row key={data[x].name} gutter={[24, 24]} style={{ marginTop: "24px" }}>
             <Col xs={24}>
               <Card title={data[x].name}>
                 {data[x].funds.filter((x: any) => x.status === "prepare" || x.status === "running")
